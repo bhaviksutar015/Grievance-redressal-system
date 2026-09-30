@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "profiles": {
+    "DEFAULT": {
+      "credentials": "credentials.json",
+      "label": "joyboy66565@gmail.com",
+      "userId": "bf97e2cf-4f6a-4d77-a9c1-584cbbb5bcd7"
+    }
+  }
+}
