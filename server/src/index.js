@@ -34,7 +34,7 @@ app.use("/api", routes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== "production") {
+if (!process.env.VERCEL) {
   app.listen(env.port, "0.0.0.0", () => {
     console.log(`[OGRSA] API server listening on http://0.0.0.0:${env.port}`);
     console.log(`[OGRSA] Neon Auth issuer: ${new URL(env.neonAuthBaseUrl).origin}`);
