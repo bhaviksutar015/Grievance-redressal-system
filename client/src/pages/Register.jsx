@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserPlus, Landmark } from "lucide-react";
 import { authClient } from "../lib/authClient";
@@ -11,6 +11,13 @@ export default function Register() {
   const [error, setError] = useState("");
   const [fieldErr, setFieldErr] = useState({});
   const [loading, setLoading] = useState(false);
+  const { data: session } = authClient.useSession();
+
+  useEffect(() => {
+    if (session?.user) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [session?.user, navigate]);
 
   const validate = () => {
     const fe = {};
