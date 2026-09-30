@@ -4,7 +4,12 @@ node_modules/
 server/.env
 client/.env
 server/uploads/
+uploads/
 client/dist/
 .claude/
 .claude.json
 skills-lock.json
+.config/
+.bashrc
+.sudo_as_admin_successful
+*.zip
