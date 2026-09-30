@@ -25,11 +25,10 @@ export default function ThemeToggle() {
             aria-label={label}
             aria-pressed={isActive}
             title={label}
-            className={`relative rounded-lg p-2 text-sm transition-colors ${
-              isActive
+            className={`relative rounded-lg p-2 text-sm transition-colors ${isActive
                 ? "text-civic-700 dark:text-civic-300"
                 : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
-            }`}
+              }`}
           >
             {isActive && (
               <motion.div

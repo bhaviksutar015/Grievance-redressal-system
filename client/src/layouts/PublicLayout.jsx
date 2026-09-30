@@ -9,8 +9,8 @@ const NAV = [
   { to: "/", label: "Home", end: true },
   { to: "/about", label: "About" },
   { to: "/awareness", label: "Awareness" },
-  { to: "/how-it-works", label: "How It Works" },
-  { to: "/track", label: "Track Grievance" },
+  { to: "/how-it-works", label: "How\u00A0It\u00A0Works" },
+  { to: "/track", label: "Track\u00A0Grievance" },
   { to: "/faqs", label: "FAQs" },
   { to: "/contact", label: "Contact" },
 ];
@@ -30,10 +30,9 @@ export default function PublicLayout() {
   }, []);
 
   const linkCls = ({ isActive }) =>
-    `relative rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-      isActive
-        ? "text-civic-700 dark:text-civic-300"
-        : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+    `relative rounded-full px-4 py-2 text-sm font-semibold shrink-0 whitespace-nowrap transition-all duration-300 ${isActive
+      ? "text-civic-700 dark:text-civic-300"
+      : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
     }`;
 
   return (
@@ -42,9 +41,8 @@ export default function PublicLayout() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "py-3" : "py-5"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "py-3" : "py-5"
+          }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="glass-panel flex h-16 items-center justify-between gap-4 rounded-2xl px-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/40 dark:border-slate-800/60">
@@ -62,7 +60,7 @@ export default function PublicLayout() {
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+            <nav className="hidden items-center gap-1 xl:flex" aria-label="Main">
               {NAV.map((n) => (
                 <NavLink key={n.to} to={n.to} end={n.end} className={linkCls}>
                   {({ isActive }) => (

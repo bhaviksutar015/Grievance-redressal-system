@@ -5,6 +5,8 @@ import { api } from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
 import { ErrorAlert, Field } from "../../components/ui";
 import { PRIORITIES, formatDate } from "../../lib/constants";
+import PageWrapper from "../../components/PageWrapper";
+import { motion } from "framer-motion";
 
 const MAX_FILE = 5 * 1024 * 1024;
 const OK_TYPES = ["application/pdf", "image/jpeg", "image/png"];
@@ -110,23 +112,33 @@ export default function SubmitGrievance() {
 
   if (success) {
     return (
-      <div className="mx-auto max-w-xl">
-        <div className="card p-8 text-center">
-          <span className="inline-flex rounded-full bg-emerald-100 p-4 text-emerald-600 dark:bg-emerald-950">
-            <CheckCircle2 className="h-10 w-10" aria-hidden="true" />
-          </span>
-          <h1 className="mt-4 text-xl font-bold text-slate-900 dark:text-white">
-            Your grievance has been successfully submitted.
+      <PageWrapper className="mx-auto max-w-xl">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          className="card p-8 sm:p-10 text-center bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-0 shadow-2xl shadow-civic-900/5 dark:shadow-civic-900/30"
+        >
+          <motion.span 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", delay: 0.2 }}
+            className="inline-flex rounded-full bg-emerald-100 shadow-inner p-4 text-emerald-600 dark:bg-emerald-900/50"
+          >
+            <CheckCircle2 className="h-12 w-12" aria-hidden="true" />
+          </motion.span>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Grievance Submitted
           </h1>
+          <p className="mt-2 text-slate-500">Your grievance has been successfully submitted and forwarded to the relevant department.</p>
 
-          <dl className="mt-6 space-y-3 rounded-xl bg-slate-50 p-5 text-left text-sm dark:bg-slate-800/60">
+          <dl className="mt-8 space-y-4 rounded-2xl bg-white/50 border border-slate-100 p-6 text-left text-sm dark:bg-slate-800/40 dark:border-slate-700/50 shadow-sm">
             <div className="flex items-center justify-between gap-3">
-              <dt className="text-slate-500">Reference ID</dt>
+              <dt className="text-slate-500 font-medium">Reference ID</dt>
               <dd className="flex items-center gap-2 font-mono font-bold text-civic-700 dark:text-civic-300">
                 {success.referenceId}
                 <button
                   onClick={copyRef}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-600 dark:hover:bg-slate-700"
+                  className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-700/50"
                   aria-label="Copy reference ID"
                   title="Copy reference ID"
                 >
@@ -138,46 +150,55 @@ export default function SubmitGrievance() {
                 </button>
               </dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-slate-500">Submission date</dt>
-              <dd className="font-medium">{formatDate(success.createdAt, true)}</dd>
+            <div className="flex justify-between items-center">
+              <dt className="text-slate-500 font-medium">Date</dt>
+              <dd className="font-semibold text-slate-700 dark:text-slate-300">{formatDate(success.createdAt, true)}</dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-slate-500">Current status</dt>
-              <dd className="font-medium">Submitted</dd>
+            <div className="flex justify-between items-center">
+              <dt className="text-slate-500 font-medium">Status</dt>
+              <dd className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">Submitted</dd>
             </div>
           </dl>
 
-          <div className="mt-6 rounded-lg bg-civic-50 p-4 text-left text-sm text-civic-900 dark:bg-civic-950/50 dark:text-civic-200">
-            <p className="font-semibold">Next steps</p>
-            <ul className="mt-1 list-inside list-disc space-y-1">
+          <div className="mt-8 rounded-2xl bg-civic-50/50 border border-civic-100/50 p-5 text-left text-sm text-civic-900 dark:bg-civic-900/20 dark:border-civic-800/30 dark:text-civic-200">
+            <p className="font-bold flex items-center gap-2">Next steps</p>
+            <ul className="mt-3 list-inside list-disc space-y-2 text-civic-800/80 dark:text-civic-300/80">
               <li>An administrator will review your grievance shortly.</li>
               <li>You'll get an in-app notification at every status change.</li>
-              <li>Track progress anytime with your reference ID — no login needed.</li>
+              <li>Track progress anytime with your reference ID.</li>
             </ul>
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link to={`/my-grievances/${success.id}`} className="btn-primary">
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+            <Link to={`/my-grievances/${success.id}`} className="btn-primary w-full sm:w-auto rounded-xl">
               View Grievance
             </Link>
-            <Link to="/my-grievances" className="btn-secondary">
+            <Link to="/my-grievances" className="btn-secondary w-full sm:w-auto rounded-xl bg-white dark:bg-slate-800">
               My Grievances
             </Link>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </PageWrapper>
     );
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Submit a Grievance</h1>
-      <p className="mt-1 text-sm text-slate-500">
-        Provide clear, factual details — it helps officials act faster.
-      </p>
+    <PageWrapper className="mx-auto max-w-2xl">
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Submit a Grievance</h1>
+        <p className="mt-2 text-sm font-medium text-slate-500">
+          Provide clear, factual details — it helps officials act faster.
+        </p>
+      </motion.div>
 
-      <form onSubmit={submit} className="card mt-6 space-y-6 p-6" noValidate>
+      <motion.form 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        onSubmit={submit} 
+        className="card mt-8 space-y-8 p-6 sm:p-8 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-0 shadow-xl shadow-civic-900/5 dark:shadow-civic-900/20" 
+        noValidate
+      >
         <ErrorAlert message={error} />
 
         <fieldset className="space-y-4">
@@ -340,11 +361,16 @@ export default function SubmitGrievance() {
           )}
         </fieldset>
 
-        <button className="btn-primary w-full" disabled={submitting}>
-          <Send className="h-4 w-4" aria-hidden="true" />
-          {submitting ? "Submitting…" : "Submit Grievance"}
-        </button>
-      </form>
-    </div>
+        <motion.button 
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="btn-primary w-full py-3 shadow-lg shadow-civic-600/20 hover:shadow-civic-600/40 transition-all rounded-xl" 
+          disabled={submitting}
+        >
+          <Send className="h-5 w-5" aria-hidden="true" />
+          <span className="font-bold">{submitting ? "Submitting…" : "Submit Grievance"}</span>
+        </motion.button>
+      </motion.form>
+    </PageWrapper>
   );
 }
